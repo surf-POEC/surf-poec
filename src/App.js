@@ -6,7 +6,7 @@ import {
   UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem ,
   Container, Row, Col 
 } from 'reactstrap';
-import Henri from './henri/Henri';
+import Maree from './maree/Maree';
 import Alphonse from './alphonse/Alphonse';
 import Cyril from './cyril/Cyril';
 
@@ -67,7 +67,7 @@ class App extends Component {
         <Row className="p-4">
           <Col md="4"><Cyril/></Col>
           <Col md="4"><Alphonse/></Col>
-          <Col md="4"><Henri/></Col>
+          <Col md="4"><Maree/></Col>
         </Row>
       </Container>
        <footer id="windguru">
