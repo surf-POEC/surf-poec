@@ -4,7 +4,7 @@ import { Button, ButtonGroup,
   Card, CardImg, CardText, CardBody, CardLink,
   CardTitle, CardSubtitle  } from 'reactstrap';
 
-class Henri extends Component {
+class Maree extends Component {
   constructor (props) {
     super(props);
 
@@ -42,4 +42,4 @@ class Henri extends Component {
   }
 }
 
-export default Henri;
+export default Maree;

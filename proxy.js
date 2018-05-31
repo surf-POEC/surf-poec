@@ -1,3 +1,5 @@
+const PORT = 3333
+
 const http = require('http');
 const nodeUrl = require('url');
 const querystring = require('querystring');
@@ -22,4 +24,6 @@ http.createServer(function (req, res) {
   });
 
   req.pipe(newReq);
-}).listen(3333);
+}).listen(PORT, () => {
+  console.log(`Proxy launched on port: ${PORT}`)
+});
