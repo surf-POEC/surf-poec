@@ -6,12 +6,10 @@ import {
   UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem ,
   Container, Row, Col 
 } from 'reactstrap';
-import Henri from './henri/Henri';
+
 import Candhis from './candhis/Candhis';
 import Vague from './vague/Vague';
-
-
-
+import Maree from './maree/Maree';
 
 class App extends Component {
   constructor(props) {
@@ -67,7 +65,7 @@ class App extends Component {
         <Row className="p-4">
           <Col md="4"><Vague/></Col>
           <Col md="4"><Candhis/></Col>
-          <Col md="4"><Henri/></Col>
+          <Col md="4"><Maree/></Col>
         </Row>
       </Container>
        <footer id="windguru">
