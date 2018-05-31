@@ -1,0 +1,9 @@
+import React, { Component } from 'react';
+import Clock from 'react-live-clock';
+
+class Clock extends React.Component {
+  render() {
+      <Clock format={'HH:mm:ss'} ticking={true} timezone={'US/Pacific'} />
+  }
+}
+

@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+}
+
+
+iframe.windguruiframe{
+  width:100%;height: auto;
+}
+
+.table.forecast-ram {
+  width: 100%;
+}
+
+.table.forecast {
+    font: 25px Arial, Helvetica, sans-serif;
+    margin: 0px 0px 0px 0px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
