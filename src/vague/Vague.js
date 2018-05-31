@@ -7,7 +7,7 @@ import { Button, ButtonGroup,
 
 
 
-class Cyril extends Component {
+class Vague extends Component {
     constructor (props) {
       super(props);
   
@@ -48,4 +48,4 @@ class Cyril extends Component {
     }
   }
 
-export default Cyril;
+export default Vague;

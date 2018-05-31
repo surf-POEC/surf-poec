@@ -7,8 +7,8 @@ import {
   Container, Row, Col 
 } from 'reactstrap';
 import Henri from './henri/Henri';
-import Alphonse from './alphonse/Alphonse';
-import Cyril from './cyril/Cyril';
+import Candhis from './candhis/Candhis';
+import Vague from './vague/Vague';
 
 
 
@@ -65,8 +65,8 @@ class App extends Component {
 
       <Container fluid={true}>
         <Row className="p-4">
-          <Col md="4"><Cyril/></Col>
-          <Col md="4"><Alphonse/></Col>
+          <Col md="4"><Vague/></Col>
+          <Col md="4"><Candhis/></Col>
           <Col md="4"><Henri/></Col>
         </Row>
       </Container>
