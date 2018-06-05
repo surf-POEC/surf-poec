@@ -33,16 +33,14 @@ class Candhis extends Component {
   }
 
   componentDidMount = () => {
-    const waves = [];
-    fetch('http://localhost:3333/').then((resp) => resp.text()).then((val) => {
+    const waves = this.state.waves;
+    fetch('http://localhost:3333/?buoy=saintjean').then((resp) => resp.text()).then((val) => {
       let dates = val.split('<td align="center" nowrap="NOWRAP">')
       console.log('val: ', dates[1])
       for (let i = 1; i < dates.length; i++) {
         let params = dates[i].split('</td>\n\t\t\t<td align="center">')
-        waves.push({
-          date: params[0],
-          h13: params[1],
-        });
+        waves.date.push(params[0])
+        waves.h13.push(params[1])
       }
       console.log('waves: ', waves)
 
@@ -56,7 +54,7 @@ class Candhis extends Component {
 
   get plotData() {
     let data = {
-      x: this.state.waves.h13,
+      x: this.state.waves.date,
       y: this.state.waves.h13,
       type: 'scatter',
       mode: 'lines+points',
