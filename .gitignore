@@ -1,7 +1,7 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 #tmp - "not working"
-proxyFnmoc.js
+# proxyFnmoc.js
 
 # dependencies
 /node_modules
