@@ -23,7 +23,11 @@ http.createServer(function (req, res) {
     // url to fetch 'http://localhost:3333/?buoy=saintjean'
     console.log('setting url for wave buoy')
     remoteUrl = 'http://candhis.cetmef.developpement-durable.gouv.fr/campagne/inc-tempsreel.php?idcampagne=6c8349cc7260ae62e3b1396831a8398f';
-
+  } else if (query.buoy == "capferret") {
+    // url to fetch 'http://localhost:3333/?buoy=capferret'
+    console.log('setting url for wave buoy')
+    // remoteUrl = 'http://candhis.cetmef.developpement-durable.gouv.fr/campagne/inc-tempsreel.php?idcampagne=b6d767d2f8ed5d21a44b0e5886680cb9';
+    remoteUrl = 'http://candhis.cetmef.developpement-durable.gouv.fr/campagne/inc-tempsreel.php?idcampagne=b6d767d2f8ed5d21a44b0e5886680cb9';
   } else if (query.gauge == "lacanau") {
     // url to fetch 'http://localhost:3333/?gauge=lacanau'
     console.log('setting url for tides')
@@ -80,11 +84,34 @@ function parseTideDom(data) {
   ]
 }
 
-function loadWaveData(data) {
-  console.log(data)
-
-
+function loadWaveData(remoteData) {
+  // console.log(remoteData)
+  let date = [] ;
+  let waves = {
+    h13: [],
+    hmax: [],
+    t13: [],
+    dirP: [],
+    spread: [],
+    }
+  let waterTemp = [];
+  
+  let dates = remoteData.split('<td align="center" nowrap="NOWRAP">')
+      for (let i = 1; i < dates.length; i++) {
+        let params = dates[i].split('</td>\n\t\t\t<td align="center">')
+        date.push(params[0]);
+        waves.h13.push(params[1]);
+        waves.hmax.push(params[2])
+        waves.t13.push(params[3])
+        waves.dirP.push(params[4])
+        waves.spread.push(params[5])
+        params = params[6].split('\r\n</td>\n\t\t</tr>\n\t')
+        waterTemp.push(params[0])
+      }
+      
   return [
-    { hours: 10, val: 25 }
+    // { hours: 10, val: 25 }
+    { date, waves, waterTemp }
   ]
+
 }

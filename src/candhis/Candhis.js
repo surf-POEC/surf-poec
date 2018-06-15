@@ -13,9 +13,10 @@ class Candhis extends Component {
     super(props);
 
     this.state = {
-      cSelected: [],
+      param: [],
+      buoy: 'capferret', // capferret, saintjean
+      date: [],
       waves: {
-        date: [],
         h13: [],
         hmax: [],
         t13: [],
@@ -28,33 +29,29 @@ class Candhis extends Component {
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
   }
 
-  onRadioBtnClick(rSelected) {
-    this.setState({ rSelected });
+  onRadioBtnClick(param) {
+    this.setState({ param });
   }
 
   componentDidMount = () => {
-    const waves = this.state.waves;
-    fetch('http://localhost:3333/?buoy=saintjean').then((resp) => resp.text()).then((val) => {
-      let dates = val.split('<td align="center" nowrap="NOWRAP">')
-      console.log('val: ', dates[1])
-      for (let i = 1; i < dates.length; i++) {
-        let params = dates[i].split('</td>\n\t\t\t<td align="center">')
-        waves.date.push(params[0])
-        waves.h13.push(params[1])
-      }
-      console.log('waves: ', waves)
 
+    fetch(`http://localhost:3333/?buoy=${this.state.buoy}`).then((resp) => resp.json()).then((val) => {
+
+      let date = val[0].date;
+      let waves = val[0].waves;
+      let waterTemp = val[0].waterTemp;
+
+      this.setState({ date })
       this.setState({ waves })
-      console.log('state', this.state.waves)
-      console.log('date2', this.state.waves.date)
-      console.log('h132', this.state.waves.h13)
+      this.setState({ waterTemp })
+
     }).then((error) => { console.log('error', error) })
     return
   }
 
   get plotData() {
     let data = {
-      x: this.state.waves.date,
+      x: this.state.date,
       y: this.state.waves.h13,
       type: 'scatter',
       mode: 'lines+points',
@@ -71,9 +68,12 @@ class Candhis extends Component {
             <CardTitle>Etats de mer</CardTitle>
             <CardSubtitle>houlographe Candhis</CardSubtitle>
           </CardBody>
+          <ButtonGroup>
+            <Button color="primary" onClick={() => this.onRadioBtnClick("Cap Ferret")} active={this.state.rSelected === 1}>Hs</Button>
+            <Button color="primary" onClick={() => this.onRadioBtnClick("St. Jean de Luz")} active={this.state.rSelected === 1}>Tp</Button>
+          </ButtonGroup>
           <iframe ref="candhisTable" src="http://candhis.cetmef.developpement-durable.gouv.fr/campagne/inc-tempsreel.php?idcampagne=6c8349cc7260ae62e3b1396831a8398f" width="100%" />
-          {console.log('date', this.state.waves.date)}
-          {console.log('h13', this.state.waves.h13)}
+          
           <Plot
             data={[
               this.plotData,
@@ -81,9 +81,11 @@ class Candhis extends Component {
             layout={{ width: 600, height: 300, title: 'A Fancy Plot' }}
           />
           <CardBody>
-            <CardText>Selected: {this.state.rSelected}</CardText>
+            <CardText>Paramètre: {this.state.param}</CardText>
             <ButtonGroup>
-              <Button color="primary" onClick={() => this.onRadioBtnClick("option")} active={this.state.rSelected === 1}>Option</Button>
+              <Button color="primary" onClick={() => this.onRadioBtnClick("Hauteur significative des vagues")} active={this.state.param === 1}>Hs</Button>
+              <Button color="primary" onClick={() => this.onRadioBtnClick("Période des vagues")} active={this.state.param === 1}>Tp</Button>
+              <Button color="primary" onClick={() => this.onRadioBtnClick("Température de l'eau")} active={this.state.param === 1}>Temp</Button>
             </ButtonGroup>
             <CardText>
               <small className="text-muted">Last updated 3 mins ago</small>
