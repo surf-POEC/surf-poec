@@ -9,79 +9,93 @@ const fetch = require('node-fetch');
 
 const fs = require('fs');
 
-http.createServer(function (req, res) {
-  const reqUrl = nodeUrl.parse(req.url)
-  const query = querystring.parse(reqUrl.query)
-  console.log(query.fnmoc)
+// http.createServer(function (req, res) {
+// const reqUrl = nodeUrl.parse(req.url)
+// const query = querystring.parse(reqUrl.query)
+// console.log(query.fnmoc)
 
-  let remoteUrl = "";
+// let remoteUrl = "";
 
-  const options = {
-    cert: fs.readFileSync('./fnmocnavy.crt'),
-    // requestCert: false,
-    // rejectUnauthorized: false,
-  };
+const options = {
+  cert: fs.readFileSync('./fnmocnavy.crt'),
+  // requestCert: false,
+  // rejectUnauthorized: false,
+};
 
-  if (query.fnmoc == "atne") {
-    // url to fetch 'http://localhost:3334/?fnmoc=atne'
-    console.log('setting url for fnmoc')
-    remoteUrl = 'https://www.fnmoc.navy.mil/wxmap_cgi/cgi-bin/wxmap_DOD_area.cgi?area=fnmoc_atlantic&set=All';
-    options.hostname = 'www.fnmoc.navy.mil' ;
-    options.port =  443;
-    options.path = '/wxmap_cgi/cgi-bin/wxmap_DOD_area.cgi?area=fnmoc_atlantic&set=All';
-    // options.method = 'GET';
-  }
+// if (query.fnmoc == "atne") {
+// url to fetch 'http://localhost:3334/?fnmoc=atne'
+console.log('setting url for fnmoc')
+remoteUrl = 'https://www.fnmoc.navy.mil/wxmap_cgi/cgi-bin/wxmap_DOD_area.cgi?area=fnmoc_atlantic&set=All';
+options.hostname = 'www.fnmoc.navy.mil';
+options.port = 443;
+options.path = '/wxmap_cgi/cgi-bin/wxmap_DOD_area.cgi?area=fnmoc_atlantic&set=All';
+// options.method = 'GET';
+// }
 
-  const agent = new https.Agent({
-    rejectUnauthorized: false
-  })
+const agent = new https.Agent({
+  rejectUnauthorized: false
+})
 
-  fetch(remoteUrl, { agent }).then((resp) => resp.text()).then((val) => {
-    let dates = val.split('dtg=')
-    console.log('val: ', dates[1])
-  }).then((error) => { console.log('error', error) })
+let date = [];
+const setDAte = async (date) => {
 
-  const remoteReq = https.request(options, function (remoteRes) {
+  const resp = await fetch(remoteUrl, { agent })
+  const val = await resp.text()
+  // console.log('val: ', val)
+  const tmp = await val.split('dtg=')
+  console.log('tmp ', tmp[1])
+  date = await tmp[1].split('&')
+  console.log('date : ', date[0])
+  return date
+}
 
-    console.log(query.fnmoc)
-    res.writeHead(remoteRes.statusCode, {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json'
-    });
+let toto = setDAte(date);
+console.log('date0 : ', toto)
+//.then((error) => { console.log('error', error) })
 
-    const remoteDataBuffer = []
+// const remoteReq = https.request(options, function (remoteRes) {
 
-    remoteRes.on('data', function (data) {
+//   console.log(query.fnmoc)
+//   res.writeHead(remoteRes.statusCode, {
+//     'Access-Control-Allow-Origin': '*',
+//     'Content-Type': 'application/json'
+//   });
 
-      remoteDataBuffer.push(data)
-    })
+//   const remoteDataBuffer = []
 
-    remoteRes.on('end', function () {
-      const result = readFnmocDate(remoteDataBuffer.join(''))
+//   remoteRes.on('data', function (data) {
 
-      res.write(JSON.stringify(result))
+//     remoteDataBuffer.push(data)
+//   })
 
-      res.end()
-    })
+//   remoteRes.on('end', function () {
+//     const result = readFnmocDate(remoteDataBuffer.join(''))
 
-  }).on('error', function (err) {
-    res.statusCode = 500;
-    res.end();
-  });
+//     res.write(JSON.stringify(result))
 
-  req.pipe(remoteReq);
+//     res.end()
+//   })
 
-}).listen(PORT, () => {
-  console.log(`Proxy launched on port: ${PORT}`)
-});
+// }).on('error', function (err) {
+//   res.statusCode = 500;
+//   res.end();
+// });
+
+// req.pipe(date) ;
+
+// })
+
+// // .listen(PORT, () => {
+//   console.log(`Proxy launched on port: ${PORT}`)
+// });
 
 function readFnmocDate(data) {
   // function to parse fnmoc's dom
   // should extract and return date
-  console.log(data)
+  console.log('data :', data)
 
 
   return [
-    { hours: 10, val: 25 }
+    { date: data }
   ]
 }

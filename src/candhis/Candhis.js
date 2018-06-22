@@ -24,6 +24,7 @@ class Candhis extends Component {
         spread: [],
       },
       waterTemp: [],
+      active: 'hs',
     };
 
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
@@ -31,6 +32,7 @@ class Candhis extends Component {
 
   onRadioBtnClick(param) {
     this.setState({ param });
+    this.setState({ active: 'temp' })
   }
 
   componentDidMount = () => {
@@ -57,6 +59,12 @@ class Candhis extends Component {
       mode: 'lines+points',
       marker: { color: 'red' },
     };
+    if (this.state.active == 'tp') {
+      data.y = this.state.waves.tp
+    }
+    if (this.state.active == 'temp') {
+      data.y = this.state.waterTemp
+    }
     return data
   }
 
@@ -68,10 +76,6 @@ class Candhis extends Component {
             <CardTitle>Etats de mer</CardTitle>
             <CardSubtitle>houlographe Candhis</CardSubtitle>
           </CardBody>
-          <ButtonGroup>
-            <Button color="primary" onClick={() => this.onRadioBtnClick("Cap Ferret")} active={this.state.rSelected === 1}>Hs</Button>
-            <Button color="primary" onClick={() => this.onRadioBtnClick("St. Jean de Luz")} active={this.state.rSelected === 1}>Tp</Button>
-          </ButtonGroup>
           <iframe ref="candhisTable" src="http://candhis.cetmef.developpement-durable.gouv.fr/campagne/inc-tempsreel.php?idcampagne=6c8349cc7260ae62e3b1396831a8398f" width="100%" />
           
           <Plot
@@ -83,13 +87,10 @@ class Candhis extends Component {
           <CardBody>
             <CardText>Paramètre: {this.state.param}</CardText>
             <ButtonGroup>
-              <Button color="primary" onClick={() => this.onRadioBtnClick("Hauteur significative des vagues")} active={this.state.param === 1}>Hs</Button>
-              <Button color="primary" onClick={() => this.onRadioBtnClick("Période des vagues")} active={this.state.param === 1}>Tp</Button>
-              <Button color="primary" onClick={() => this.onRadioBtnClick("Température de l'eau")} active={this.state.param === 1}>Temp</Button>
+              <Button color="primary" onClick={() => this.onRadioBtnClick("Hauteur significative des vagues")} active={this.state.active === 'hs'}>Hs</Button>
+              <Button color="primary" onClick={() => this.onRadioBtnClick("Période des vagues")} active={this.state.active === 'tp'}>Tp</Button>
+              <Button color="primary" onClick={() => this.onRadioBtnClick("Température de l'eau")} active={this.state.active === 'temp'}>Temp</Button>
             </ButtonGroup>
-            <CardText>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </CardText>
           </CardBody>
         </Card>
       </Container>

@@ -27,10 +27,10 @@ class Vague extends Component {
             <CardBody>
 
             
-              <CardTitle>titre</CardTitle>
-              <CardSubtitle>soustitre</CardSubtitle>
+              <CardTitle>Prévision FNMOC</CardTitle>
+              <CardSubtitle>Altantic Nord</CardSubtitle>
             </CardBody>
-            <img src='https://www.fnmoc.navy.mil//wxmap_cgi/dynamic/NVG/2018052906/nvg10.sgwvht.012.atlantic.gif' width="100%" />
+            <img src='https://www.fnmoc.navy.mil//wxmap_cgi/dynamic/NVG/2018062200/nvg10.sgwvht.012.atlantic.gif' width="100%" />
             <CardBody>
               <CardText>Selected: {this.state.rSelected}</CardText>
               <ButtonGroup>
@@ -38,9 +38,6 @@ class Vague extends Component {
                 <Button color="primary" onClick={() => this.onRadioBtnClick("vent")} active={this.state.rSelected === 2}>Vent</Button>
                 <Button color="primary" onClick={() => this.onRadioBtnClick("date")} active={this.state.rSelected === 3}>Date</Button>
               </ButtonGroup>
-              <CardText>
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </CardText>
             </CardBody>
           </Card>
         </Container>

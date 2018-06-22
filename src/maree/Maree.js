@@ -72,21 +72,17 @@ class Maree extends Component {
         </div>
 
           
-          <img src="http://maree.info/maree-graph.php?p=134&d=20180528&ut=2&scale=1" />
-          <Scatter data={this.recupData}/>
+          {/* <img src="http://maree.info/maree-graph.php?p=134&d=20180528&ut=2&scale=1" /> */}
+          {/* <Scatter data={this.recupData}/> */}
 
           <CardBody>
             <CardText>Selected: {this.state.rSelected}</CardText>
             <ButtonGroup className="ButtonGroup">
-              <Button color="primary" onClick={() => this.onRadioBtnClick("spot")} active={this.state.rSelected === 1}>Spot</Button>
+              <Button color="primary" onClick={() => this.onRadioBtnClick("Lacanau")} active={this.state.rSelected === 1}>Lacanau</Button>
             </ButtonGroup>
             <ButtonGroup className="ButtonGroup">
-              <Button color="primary" onClick={() => this.onRadioBtnClick("spot")} active={this.state.rSelected === 1}>Spot1</Button>
+              <Button color="primary" onClick={() => this.onRadioBtnClick("spot")} active={this.state.rSelected === 1}>Biscarosse</Button>
             </ButtonGroup>
-
-            <CardText>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </CardText>
           </CardBody>
 
         </Card>
