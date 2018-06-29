@@ -37,7 +37,9 @@ class Candhis extends Component {
 
   componentDidMount = () => {
 
-    fetch(`http://localhost:3333/?buoy=${this.state.buoy}`).then((resp) => resp.json()).then((val) => {
+    console.log('Fectching wave bouy data')
+    fetch(`http://localhost:3333/?buoy=${this.state.buoy}`)
+      .then((resp) => resp.json()).then((val) => {
 
       let date = val[0].date;
       let waves = val[0].waves;
@@ -46,8 +48,10 @@ class Candhis extends Component {
       this.setState({ date })
       this.setState({ waves })
       this.setState({ waterTemp })
+      console.log('Wave bouy data fetched')
 
-    }).then((error) => { console.log('error', error) })
+    })
+    //.then((error) => { console.log('error', error) })
     return
   }
 

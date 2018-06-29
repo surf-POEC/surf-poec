@@ -5,7 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.1.1",
     "chart.js": "^2.7.2",
-    "plotly.js": "^1.38.1",
+    "plotly.js": "^1.38.3",
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.1",
     "react-chartjs-2": "^2.7.2",
